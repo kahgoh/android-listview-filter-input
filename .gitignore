@@ -1,0 +1,10 @@
+# Eclipse Directories
+.metadata
+.settings
+bin
+target
+gen
+
+# Vim files
+*.swp
+*~
