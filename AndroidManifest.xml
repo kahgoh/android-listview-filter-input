@@ -6,9 +6,12 @@
 
     <uses-sdk android:minSdkVersion="10" />
 
-    <application android:icon="@drawable/ic_launcher" android:label="@string/virtualKeyboard">
+    <application android:icon="@drawable/ic_launcher" 
+                 android:label="@string/virtualKeyboard" 
+                 android:debuggable="true">
         <activity android:name=".VirtualKeyboardFilter"
-                  android:label="@string/virtualKeyboard">
+                  android:label="@string/virtualKeyboard"
+                 >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
