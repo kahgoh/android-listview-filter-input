@@ -5,5 +5,6 @@
 
     <string name="filterLabel">Filter:</string>
     <string name="keyboardShown">Start typing in the filter!</string>
+    <string name="keyboardHidden">Keyboard still hidden ...</string>
     <string name="noInputManager">Could not get Input Method Manager!</string>
 </resources>

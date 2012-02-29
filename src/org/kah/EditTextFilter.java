@@ -10,6 +10,12 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
 
+/**
+ * Activity demonstrating filtering a list. The content is filtered as the
+ * content of the {@link EditText} is changed.
+ * 
+ * @author Kah Goh
+ */
 public class EditTextFilter extends Activity {
 
     @Override
@@ -34,6 +40,8 @@ public class EditTextFilter extends Activity {
 	listView.setAdapter(dataAdapter);
 
 	final EditText filterEditor = (EditText) findViewById(R.id.editFilter);
+
+	// Add a listener to the EditText that will update the filter.
 	filterEditor.addTextChangedListener(new TextWatcher() {
 
 	    @Override
@@ -54,6 +62,7 @@ public class EditTextFilter extends Activity {
 	    }
 
 	    private void updateText() {
+		// Update the filter according to the contents of the field.
 		dataAdapter.getFilter().filter(
 			filterEditor.getText().toString());
 	    }

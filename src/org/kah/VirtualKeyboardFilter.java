@@ -5,12 +5,25 @@ import java.util.ArrayList;
 import android.app.ListActivity;
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.ResultReceiver;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.Toast;
 
+/**
+ * Activity demonstrating filtering a list using
+ * {@link ListView#setTextFilterEnabled(boolean)} with a virtual keyboard, for
+ * input. As far as I know, this only works up to Android 2.3.3.
+ * 
+ * @author Kah Goh
+ */
 public class VirtualKeyboardFilter extends ListActivity {
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 	super.onCreate(savedInstanceState);
@@ -32,6 +45,9 @@ public class VirtualKeyboardFilter extends ListActivity {
 	getListView().setTextFilterEnabled(true);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void onWindowFocusChanged(boolean hasFocus) {
 	super.onWindowFocusChanged(hasFocus);
@@ -46,13 +62,30 @@ public class VirtualKeyboardFilter extends ListActivity {
 	}
     }
 
+    /**
+     * Displays the virtual keyboard.
+     */
     private void showKeyboard() {
 	final InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
 
 	if (imm != null) {
-	    imm.showSoftInput(getListView(), 0);
-	    Toast.makeText(getApplicationContext(), R.string.keyboardShown,
-		    Toast.LENGTH_SHORT).show();
+	    imm.showSoftInput(getListView(), 0, new ResultReceiver(
+		    new Handler()) {
+
+		@Override
+		protected void onReceiveResult(int resultCode, Bundle resultData) {
+		    if (resultCode == InputMethodManager.RESULT_SHOWN
+			    || resultCode == InputMethodManager.RESULT_UNCHANGED_SHOWN) {
+			Toast.makeText(getApplicationContext(),
+				R.string.keyboardShown, Toast.LENGTH_SHORT)
+				.show();
+		    } else {
+			Toast.makeText(getApplicationContext(),
+				R.string.keyboardHidden, Toast.LENGTH_LONG)
+				.show();
+		    }
+		}
+	    });
 	} else {
 	    Toast.makeText(this, R.string.noInputManager, Toast.LENGTH_LONG)
 		    .show();
